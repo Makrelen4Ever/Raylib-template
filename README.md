@@ -1,2 +1,2 @@
 # Raylib-template
-A template for new raylib projects
+This is a template i made for new raylib programs. It defines a simple window, and a draw loop. 
