@@ -15,7 +15,7 @@ struct ScreenStruct
 
 ScreenStruct screen;
 
-Player player = AddPlayer({screen.width/2, screen.height/2}, {0, 0}, 0.2f, 0, 0.999f);
+Player player = AddPlayer({screen.width/2, screen.height/2}, {0, 0}, 10.0f, 0, 0.999f);
 
 void FixedUpdate()
 {

@@ -8,9 +8,11 @@
 struct MTransform M_transform;
 struct Rigidbody M_rb;
 
+
 void Player::DrawPlayer()
 {
-    DrawTextureEx(PlayerTexture, transform.pos, transform.rot, transform.Scale, WHITE);
+    //DrawTextureEx(PlayerTexture, transform.pos, transform.rot, transform.Scale, WHITE);
+    DrawCircleV(transform.pos, transform.Scale, WHITE);
 }
 
 void Player::Move()
@@ -30,7 +32,7 @@ void Player::Update()
 
 void Player::InitPlayer(MTransform transform, Rigidbody rb, float Speed)
 {
-    PlayerTexture = LoadTexture("src/Textures/Square.png");
+    //PlayerTexture = LoadTexture("src/Textures/Square.png");
 
     transform = transform;
     rb = rb;
