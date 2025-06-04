@@ -17,18 +17,17 @@ struct Rigidbody
 
 class Player
 {   
-    private:
-        Texture2D texture;
-
     public:
         MTransform transform;
         Rigidbody rb;
 
+        Texture2D PlayerTexture;
+
         float Speed;
 
-        void LoadPlayerTexture();
-
         void DrawPlayer();
+
+        void SetPlayerTexture();
 
         void Move();
 

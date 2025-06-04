@@ -3,28 +3,14 @@
 #include <iostream>
 
 #include "Player.h"
+#include "InputManager.h"
 
 struct MTransform M_transform;
 struct Rigidbody M_rb;
 
-Rigidbody Player::rb()
-{
-    return rb;
-}
-
-MTransform Player::transform()
-{
-    return transform;
-}
-
-void Player::LoadPlayerTexture()
-{
-    this->texture = LoadTexture("src/Textures/Square.png");
-}
-
 void Player::DrawPlayer()
 {
-    DrawTextureEx(texture, transform.pos, transform.rot, transform.Scale, WHITE);
+    DrawTextureEx(PlayerTexture, transform.pos, transform.rot, transform.Scale, WHITE);
 }
 
 void Player::Move()
@@ -42,14 +28,14 @@ void Player::Update()
     transform.pos = Vector2Add(transform.pos, rb.vel);
 }
 
-void InitPlayer(MTransform transform, Rigidbody rb, float Speed)
+void Player::InitPlayer(MTransform transform, Rigidbody rb, float Speed)
 {
-    LoadPlayerTexture();
+    PlayerTexture = LoadTexture("src/Textures/Square.png");
 
-    this->transform = transform;
-    this->rb = rb;
+    transform = transform;
+    rb = rb;
 
-    this->Speed = Speed;
+    Speed = Speed;
 }
 
 Player AddPlayer(Vector2 pos, Vector2 vel, float scale, float rotation, float drag)
@@ -62,7 +48,7 @@ Player AddPlayer(Vector2 pos, Vector2 vel, float scale, float rotation, float dr
     tempPlayerTransform.rot = rotation;
 
     Rigidbody tempPlayerrb;
-    tempPlayerrb.Drag = .drag;
+    tempPlayerrb.Drag = drag;
     tempPlayerrb.vel = vel;
 
     player.InitPlayer(tempPlayerTransform, tempPlayerrb, 1);
