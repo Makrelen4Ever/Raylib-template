@@ -1,7 +1,7 @@
 #include <raylib.h>
 #include <iostream>
 
-#include "src/Generics/InputManager.h"
+#include "src/InputManager.h"
 
 //A public static Vector2 that contains the current input.
 Vector2 InputManager::Getaxis(float Scale)

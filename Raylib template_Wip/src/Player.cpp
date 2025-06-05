@@ -2,9 +2,9 @@
 #include <raymath.h>
 #include <iostream>
 
-#include "src/Generics/Rigidbody.h"
-#include "src/Generics/GenericStructs.h"
-#include "src/Generics/InputManager.h"
+#include "src/Rigidbody.h"
+#include "src/GenericStructs.h"
+#include "src/InputManager.h"
 #include "src/Player.h"
 
 //Defines a player rigidbody, and transform.

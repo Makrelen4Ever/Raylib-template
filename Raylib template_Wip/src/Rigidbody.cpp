@@ -2,7 +2,7 @@
 #include <raymath.h>
 #include <iostream>
 
-#include "src/Generics/Rigidbody.h"
+#include "src/Rigidbody.h"
 
 //Defines a Rigidbody update loop, based on the Rigidbody header.
 void Rigidbody::Update()

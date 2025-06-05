@@ -5,9 +5,9 @@
 #include <math.h>
 
 
-#include "src/Generics/GenericStructs.h"
-#include "src/Generics/Rigidbody.h"
-#include "src/Generics/InputManager.h"
+#include "src/GenericStructs.h"
+#include "src/Rigidbody.h"
+#include "src/InputManager.h"
 #include "src/Player.h"
 
 //Defines a screen struct that the raylb window can referance
