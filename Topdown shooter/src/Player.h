@@ -1,5 +1,6 @@
 # pragma once
 
+//Defines the Player class, and the different functions and variables.
 class Player
 {   
     public:
@@ -17,4 +18,5 @@ class Player
         void InitPlayer(MTransform transform, Rigidbody rb, float Speed);
 };
 
+//Defines the addPlayer function
 Player AddPlayer(Vector2 pos, Vector2 vel, float scale, float rotation, float drag, float Speed);

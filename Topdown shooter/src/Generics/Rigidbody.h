@@ -1,5 +1,6 @@
 #pragma once
 
+//Defines a rigidbody with a few parameters.
 class Rigidbody
 {
     public:
