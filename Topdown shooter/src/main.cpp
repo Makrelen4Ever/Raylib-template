@@ -4,8 +4,11 @@
 #include <vector>
 #include <math.h>
 
-#include "src/Classes/InputManager.h"
-#include "src/Classes/Player.h"
+
+#include "src/Generics/GenericStructs.h"
+#include "src/Generics/Rigidbody.h"
+#include "src/Generics/InputManager.h"
+#include "src/Player.h"
 
 struct ScreenStruct
 {
@@ -20,9 +23,6 @@ Player player = AddPlayer({screen.width/2, screen.height/2}, {0, 0}, 10.0f, 0, 0
 void FixedUpdate()
 {
     player.Move();
-    player.ApplyDrag();
-
-    player.Update();
 };
 
 void Update()
@@ -33,19 +33,26 @@ void Update()
 int main()
 {
     InitWindow(screen.width, screen.height, "Raylib test");
-    SetTargetFPS(120);
+    // SetTargetFPS(120);
 
     float tick;
+
+    int i = 0;
 
     while(WindowShouldClose() == false)
     {
         Update();
 
         tick += GetFrameTime();
+        i++;
 
-        if(tick >= 1/50)
+        if(tick >= 0.02f)
         {
             tick = 0;
+
+            std::cout << 1.0f/((float)i / (float)GetFPS()) << std::endl;
+            i = 0;
+            
             FixedUpdate();
         }
 

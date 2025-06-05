@@ -1,8 +1,7 @@
 #include <raylib.h>
-#include <raymath.h>
 #include <iostream>
 
-#include "src/Classes/InputManager.h"
+#include "src/Generics/InputManager.h"
 
 Vector2 InputManager::Getaxis(float Scale)
 {

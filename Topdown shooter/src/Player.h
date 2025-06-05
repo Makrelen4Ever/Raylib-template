@@ -1,20 +1,5 @@
 # pragma once
 
-struct MTransform
-{
-    Vector2 pos;
-
-    float Scale;
-    float rot;
-};
-
-struct Rigidbody
-{
-    Vector2 vel;
-
-    float Drag;
-};
-
 class Player
 {   
     public:
@@ -27,13 +12,7 @@ class Player
 
         void DrawPlayer();
 
-        void SetPlayerTexture();
-
         void Move();
-
-        void ApplyDrag();
-
-        void Update();
 
         void InitPlayer(MTransform transform, Rigidbody rb, float Speed);
 };

@@ -2,11 +2,13 @@
 #include <raymath.h>
 #include <iostream>
 
-#include "src/Classes/Player.h"
-#include "src/Classes/InputManager.h"
+#include "src/Generics/Rigidbody.h"
+#include "src/Generics/GenericStructs.h"
+#include "src/Generics/InputManager.h"
+#include "src/Player.h"
 
-struct MTransform M_transform;
-struct Rigidbody M_rb;
+Rigidbody M_rb;
+MTransform M_transform;
 
 void Player::DrawPlayer()
 {
@@ -17,16 +19,7 @@ void Player::DrawPlayer()
 void Player::Move()
 {
     Player::rb.vel = Vector2Add(InputManager::Getaxis(Speed), rb.vel);
-}
-
-void Player::ApplyDrag()
-{
-    Player::rb.vel = Vector2Scale(rb.vel, rb.Drag);
-}
-
-void Player::Update()
-{
-    Player::transform.pos = Vector2Add(transform.pos, rb.vel);
+    M_rb.Update();
 }
 
 void Player::InitPlayer(MTransform transform, Rigidbody rb, float Speed)
