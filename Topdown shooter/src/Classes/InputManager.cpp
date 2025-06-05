@@ -2,7 +2,7 @@
 #include <raymath.h>
 #include <iostream>
 
-#include "InputManager.h"
+#include "src/Classes/InputManager.h"
 
 Vector2 InputManager::Getaxis(float Scale)
 {
@@ -14,5 +14,5 @@ Vector2 InputManager::Getaxis(float Scale)
     Y = IsKeyDown(KEY_W) || IsKeyDown(KEY_UP) ? -1 : 0;
     Y += IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN) ? 1 : 0;
     
-    return Vector2Scale({X, Y}, Scale);
+    return {X * Scale, Y * Scale};
 }

@@ -4,8 +4,8 @@
 #include <vector>
 #include <math.h>
 
-#include "InputManager.h"
-#include "Player.h"
+#include "src/Classes/InputManager.h"
+#include "src/Classes/Player.h"
 
 struct ScreenStruct
 {
@@ -15,7 +15,7 @@ struct ScreenStruct
 
 ScreenStruct screen;
 
-Player player = AddPlayer({screen.width/2, screen.height/2}, {0, 0}, 10.0f, 0, 0.999f);
+Player player = AddPlayer({screen.width/2, screen.height/2}, {0, 0}, 10.0f, 0, 0.95f, 1);
 
 void FixedUpdate()
 {
@@ -33,7 +33,7 @@ void Update()
 int main()
 {
     InitWindow(screen.width, screen.height, "Raylib test");
-    // SetTargetFPS(120);
+    SetTargetFPS(120);
 
     float tick;
 
