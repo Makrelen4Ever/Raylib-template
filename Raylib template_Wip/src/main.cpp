@@ -21,10 +21,11 @@ struct ScreenStruct
 
 ScreenStruct screen;
 Camera2D camera = { 0 };
+Player player;
 
 //The fixedUpdate function.
 //Gets called 50 times a sec.
-void FixedUpdate(Player player)
+void FixedUpdate()
 {
     player.Move();
     camera.target = Vector2Lerp(camera.target, { player.transform.position.x, player.transform.position.y}, .05f);
@@ -32,7 +33,7 @@ void FixedUpdate(Player player)
 
 //Refular update.
 //Gets called once a frame.
-void Update(Player player)
+void Update()
 {
     player.DrawPlayer();
 };
@@ -42,9 +43,8 @@ int main()
 {
     //Inits a window based on the screen struct.
     InitWindow(screen.width, screen.height, "Raylib test");
-
-    LoadLevel(1, 50);
-    Player player = GetPlayer();
+    
+    player = LoadLevel(1, 10);
 
     //Defines the tick variable for the fixed update.
     float tick;
@@ -65,7 +65,7 @@ int main()
             //resets the tick, and calls the fixed update.
             tick = 0;
             
-            FixedUpdate(player);
+            FixedUpdate();
         }
 
         //Clears the background, and write the current Fps in the top-left corner.
@@ -76,7 +76,7 @@ int main()
             BeginMode2D(camera);
 
                 //Calls the update function used to draw things on the screen.
-                Update(player);
+                Update();
                 DrawLevel();
             EndMode2D();
 

@@ -8,7 +8,7 @@
 void Rigidbody::Update()
 {
     //Applies the drag to the current velocity
-    Rigidbody::vel = Vector2Scale(vel, Rigidbody::Drag);
+    Rigidbody::vel = Vector2Scale(Rigidbody::vel, Rigidbody::Drag);
 
     //Checks if the the rigidbody should be influenced with gravity. 
     if(UseGravity)

@@ -1,6 +1,16 @@
 #pragma once
 
-void LoadLevel(int levelIndex, int BlockSize);
-void DrawLevel();
+struct Block{
+    int x;
+    int y;
 
-Player GetPlayer();
+    int w;
+    int h;
+
+    bool IsPortal;
+};
+
+std::vector<Block> Blocks;
+
+Player LoadLevel(int levelIndex, int BlockSize);
+void DrawLevel();
