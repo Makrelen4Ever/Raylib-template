@@ -19,4 +19,4 @@ class Player
 };
 
 //Defines the addPlayer function
-Player AddPlayer(Vector2 pos, Vector2 vel, float scale, float rotation, float drag, float Speed);
+Player AddPlayer(Vector2 pos, Vector2 vel, Vector2 GravityDir, float scale, float rotation, float drag, float GravityScale, float Speed, bool UseGravity);

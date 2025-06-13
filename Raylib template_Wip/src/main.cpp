@@ -10,6 +10,8 @@
 #include "src/InputManager.h"
 #include "src/Player.h"
 
+#include "level.h"
+
 //Defines a screen struct that the raylb window can referance
 struct ScreenStruct
 {
@@ -18,20 +20,19 @@ struct ScreenStruct
 };
 
 ScreenStruct screen;
-
-//Defines the player, based on the player class. 
-Player player = AddPlayer({screen.width/2, screen.height/2}, {0, 0}, 10.0f, 0, 0.95f, 1);
+Camera2D camera = { 0 };
 
 //The fixedUpdate function.
 //Gets called 50 times a sec.
-void FixedUpdate()
+void FixedUpdate(Player player)
 {
     player.Move();
+    camera.target = Vector2Lerp(camera.target, { player.transform.position.x, player.transform.position.y}, .05f);
 };
 
 //Refular update.
 //Gets called once a frame.
-void Update()
+void Update(Player player)
 {
     player.DrawPlayer();
 };
@@ -41,10 +42,17 @@ int main()
 {
     //Inits a window based on the screen struct.
     InitWindow(screen.width, screen.height, "Raylib test");
-    // SetTargetFPS(120);
+
+    LoadLevel(1, 50);
+    Player player = GetPlayer();
 
     //Defines the tick variable for the fixed update.
     float tick;
+
+    camera.target = {player.transform.position.x, player.transform.position.y + 20.0f};
+    camera.offset = {screen.width / 2, screen.height / 2};
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f;
 
     //Loops every frame until the window is closed.
     while(WindowShouldClose() == false)
@@ -57,16 +65,20 @@ int main()
             //resets the tick, and calls the fixed update.
             tick = 0;
             
-            FixedUpdate();
+            FixedUpdate(player);
         }
 
         //Clears the background, and write the current Fps in the top-left corner.
         BeginDrawing();
-        ClearBackground((Color){50, 50, 50, 255});
-        DrawFPS(10, 10);
+            ClearBackground((Color){50, 50, 50, 255});
+            DrawFPS(10, 10);
 
-        //Calls the update function used to draw things on the screen.
-        Update();
+            BeginMode2D(camera);
+
+                //Calls the update function used to draw things on the screen.
+                Update(player);
+                DrawLevel();
+            EndMode2D();
 
         EndDrawing();
     }

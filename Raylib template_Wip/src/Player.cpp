@@ -7,16 +7,12 @@
 #include "src/InputManager.h"
 #include "src/Player.h"
 
-//Defines a player rigidbody, and transform.
-Rigidbody M_rb;
-MTransform M_transform;
-
 //Draws the player based on the texture
 //The texture doesn't work at the moment, so i'm using a sphere for debugging.
 void Player::DrawPlayer()
 {
     // DrawTextureEx(PlayerTexture, transform.pos, transform.rot, transform.Scale, WHITE);
-    DrawCircleV(transform.pos, 5, WHITE);
+    DrawCircleV(transform.position, 5, WHITE);
 }
 
 //Adds a foce to the player rigidbody based on the Inputmanager
@@ -24,7 +20,9 @@ void Player::DrawPlayer()
 void Player::Move()
 {
     Player::rb.vel = Vector2Add(InputManager::Getaxis(Speed), rb.vel);
-    M_rb.Update();
+    Player::rb.Update();
+
+    Player::transform.position = Vector2Add(transform.position, rb.vel);
 }
 
 //Initalizing a new player based on a few input parameters
@@ -39,21 +37,24 @@ void Player::InitPlayer(MTransform transform, Rigidbody rb, float Speed)
 }
 
 //Adds a new player and initializes it.
-Player AddPlayer(Vector2 pos, Vector2 vel, float scale, float rotation, float drag, float Speed)
+Player AddPlayer(Vector2 pos, Vector2 vel, Vector2 GravityDir, float scale, float rotation, float drag, float GravityScale, float Speed, bool UseGravity)
 {
     //Defines the player
     Player player;
 
     //Defines a transform for the player
     MTransform tempPlayerTransform;
-    tempPlayerTransform.pos = pos;
+    tempPlayerTransform.position = pos;
     tempPlayerTransform.Scale = scale;
-    tempPlayerTransform.rot = rotation;
+    tempPlayerTransform.Dir = rotation;
 
     //Defines a rigidbody for the player.
     Rigidbody tempPlayerrb;
     tempPlayerrb.Drag = drag;
     tempPlayerrb.vel = vel;
+    tempPlayerrb.GravityDir = Vector2Normalize(GravityDir);
+    tempPlayerrb.GravityScale = GravityScale;
+    tempPlayerrb.UseGravity = UseGravity;
 
     //Initializes the player.
     player.InitPlayer(tempPlayerTransform, tempPlayerrb, Speed);
