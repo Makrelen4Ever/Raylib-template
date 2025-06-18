@@ -14,49 +14,68 @@
 void Player::DrawPlayer()
 {
     // DrawTextureEx(PlayerTexture, transform.pos, transform.rot, transform.Scale, WHITE);
-    DrawRectangleV(transform.position, {5, 5}, WHITE);
+    DrawRectangleV(transform.position, {transform.Scale, transform.Scale}, WHITE);
 }
 
 //Adds a foce to the player rigidbody based on the Inputmanager
 //Updates the rigidbody to apply drag, and other factors.
-void Player::Move()
+void Player::Move(float fixedDeltaTime)
 {
+    Vector2 OldPos = transform.position;
+
+    if(IsOnGround & (InputManager::Getaxis(1).y < 0))
+    {
+        Player::rb.vel = {rb.vel.x, -JumpForce};
+        std::cout << "Jump" << std::endl;
+    }
+
     Player::rb.vel = Vector2Add((Vector2){InputManager::Getaxis(Speed).x, 0}, rb.vel);
-    Player::rb.Update();
+    Player::rb.Update(fixedDeltaTime);
 
-    Player::transform.position = Vector2Add(transform.position, rb.vel);
+    Player::transform.position = Vector2Add(transform.position, Vector2Scale(rb.vel, fixedDeltaTime));
 
-    // for(Block block : Blocks)
-    // {
-    //     if(transform.position.x + transform.Scale > block.x && transform.position.y + transform.Scale > block.y && transform.position.x < block.x + block.w && transform.position.y > block.y + block.h)
-    //     {
-    //         if(transform.position.x < block.x)
-    //         {
-    //             Player::transform.position.x = block.x - transform.Scale;
+    Player::IsOnGround = false;
 
-    //             Player::rb.vel = {0, rb.vel.y};
-    //         }else if(transform.position.x > block.x){
-    //             Player::transform.position.x = block.x + block.w;
+    for(int i = 0; i < GetBlocksLength(); i++)
+    {
+        Block block = GetBlock(i);
 
-    //             Player::rb.vel = {0, rb.vel.y};
-    //         }
+        if(Col(transform.position, {transform.Scale, transform.Scale}, {(float)block.x, (float)block.y}, {(float)block.w, (float)block.h}))
+        {
+            if(block.IsPortal)
+            {
+                Player::LevelFinished = true;
+                continue;
+            }
 
-    //         if(transform.position.y < block.y)
-    //         {
-    //             Player::transform.position.x = block.x - transform.Scale;
+            if(abs(OldPos.y - transform.position.y) < 5.0f * rb.GravityScale)
+            {
+                Player::rb.vel.y = 0;
+                Player::transform.position.y = OldPos.y;
+            }else
+            {
+                Player::rb.vel.x = 0;
+                Player::transform.position.x = OldPos.x;
 
-    //             Player::rb.vel = {rb.vel.x, 0};
-    //         }else if(transform.position.y > block.y){
-    //             Player::transform.position.x = block.x + block.w;
+                continue;
+            }
 
-    //             Player::rb.vel = {rb.vel.x, 0};
-    //         }
-    //     }
-    // }
+            if(Col(transform.position, {transform.Scale, transform.Scale}, {(float)block.x, (float)block.y}, {(float)block.w, (float)block.h}))
+            {
+                Player::rb.vel.x = 0;
+                Player::transform.position.x = OldPos.x;
+            }
+        }
+
+        if(Col({transform.position.x + 1, transform.position.y + transform.Scale}, {transform.Scale - 2, 5}, {(float)block.x, (float)block.y}, {(float)block.w, (float)block.h}))
+        {
+            Player::IsOnGround = true;
+        }
+    }
 }
 
 //Initalizing a new player based on a few input parameters
-void Player::InitPlayer(MTransform transform, Rigidbody rb, float Speed)
+void Player::InitPlayer(MTransform transform, Rigidbody rb, float Speed, float JumpForce)
 {
     //Player::PlayerTexture = LoadTexture("src/Textures/Square.png");
 
@@ -64,10 +83,13 @@ void Player::InitPlayer(MTransform transform, Rigidbody rb, float Speed)
     Player::rb = rb;
 
     Player::Speed = Speed;
+    Player::JumpForce = JumpForce;
+
+    Player::LevelFinished = false;
 }
 
 //Adds a new player and initializes it.
-Player AddPlayer(Vector2 pos, Vector2 vel, Vector2 GravityDir, float scale, float rotation, float drag, float GravityScale, float Speed, bool UseGravity)
+Player AddPlayer(Vector2 pos, Vector2 vel, Vector2 GravityDir, float scale, float rotation, float drag, float GravityScale, float Speed, float JumpForce, bool UseGravity)
 {
     //Defines the player
     Player player;
@@ -87,7 +109,7 @@ Player AddPlayer(Vector2 pos, Vector2 vel, Vector2 GravityDir, float scale, floa
     tempPlayerrb.UseGravity = UseGravity;
 
     //Initializes the player.
-    player.InitPlayer(tempPlayerTransform, tempPlayerrb, Speed);
+    player.InitPlayer(tempPlayerTransform, tempPlayerrb, Speed, JumpForce);
 
     //Returns the player.
     return player;

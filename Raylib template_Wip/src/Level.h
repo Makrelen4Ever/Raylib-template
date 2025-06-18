@@ -10,7 +10,11 @@ struct Block{
     bool IsPortal;
 };
 
-std::vector<Block> Blocks;
+static std::vector<Block> Blocks;
 
 Player LoadLevel(int levelIndex, int BlockSize);
 void DrawLevel();
+
+Block GetBlock(int index);
+
+int GetBlocksLength();

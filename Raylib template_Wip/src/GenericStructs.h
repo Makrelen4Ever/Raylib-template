@@ -8,3 +8,5 @@ struct MTransform
     float Scale;
     float Dir;
 };
+
+bool Col(Vector2 v1, Vector2 v1S, Vector2 v2, Vector2 v2S);

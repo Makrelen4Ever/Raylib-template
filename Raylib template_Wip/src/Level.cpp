@@ -2,8 +2,6 @@
 #include <iostream>
 #include <vector>
 
-// using namespace std;
-
 #include "GenericStructs.h"
 #include "Rigidbody.h"
 #include "Player.h"
@@ -20,8 +18,31 @@ std::vector<std::vector<std::string>> Levels = {
         "+_________",
         "aaa_______",
         "_______aaa",
+        "_@_______a",
+        "aaaaaaaaaa",
+    },
+
+    {
+        "_+________",
+        "_a________",
+        "__________",
+        "___a______",
+        "__________",
+        "_____a____",
+        "__________",
+        "_______a__",
+        "__________",
+        "_________a",
         "_@________",
         "aaaaaaaaaa",
+    },
+
+    {
+        "____@_____",
+        "__________",
+        "__________",
+        "aaaaaaaaaa",
+        "____+_____",
     },
 };
 
@@ -33,17 +54,17 @@ Player LoadLevel(int levelIndex, int BlockSize)
     char b = 'a';
     char e = '+';
 
-    Vector2 playerPos;
+    Vector2 playerPos = {0, 0};
 
-    for(int i = 0; i < Levels[levelIndex].size(); i++)
+    for(int i = 0; i < (int)Levels[levelIndex].size(); i++)
     {
-        for(int j = 0; j < Levels[levelIndex][i].size(); j++)
+        for(int j = 0; j < (int)Levels[levelIndex][i].size(); j++)
         {
-            auto l = Levels[levelIndex][i][j];
+            char l = Levels[levelIndex][i][j];
 
             if(l == p)
             {
-                playerPos = {j * BlockSize, i * BlockSize}; //AddPlayer({j * BlockSize, i * BlockSize}, {0, 0}, {0, 9.81f}, 5, 0, 0.95f, 1, 1, true);
+                playerPos = {(float)j * BlockSize, (float)i * BlockSize};
             }else if(l == b)
             {
                 Block instance = {j * BlockSize, i * BlockSize, BlockSize, BlockSize, false};
@@ -59,7 +80,17 @@ Player LoadLevel(int levelIndex, int BlockSize)
         }
     }
 
-    return AddPlayer(playerPos, {0, 0}, {0, 9.81f}, 5, 0, 0.95f, 1, 1, true);;
+    return AddPlayer(playerPos, {0, 0}, {0, 9.81f}, 5, 0, 0.95f, 8, 10, 300, true);
+};
+
+Block GetBlock(int index)
+{
+    return Blocks[index];
+};
+
+int GetBlocksLength()
+{
+    return Blocks.size();
 };
 
 void DrawLevel()
@@ -68,4 +99,4 @@ void DrawLevel()
     {
         DrawRectangle(block.x, block.y, block.w, block.h, block.IsPortal ? (Color){255, 0, 255, 255} : WHITE);
     }
-}
+};

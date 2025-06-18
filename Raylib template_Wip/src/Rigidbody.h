@@ -12,5 +12,5 @@ class Rigidbody
 
         Vector2 GravityDir;
 
-        void Update();
+        void Update(float fixedDeltaTime);
 };
