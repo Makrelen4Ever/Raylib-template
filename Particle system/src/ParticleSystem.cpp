@@ -20,11 +20,11 @@ void ParticleSystem_:: AddParticle(Vector2 pos, Vector2 vel)
 
 void ParticleSystem_::UpdateParticles(float deltaTime, Vector2 target, float forceMult)
 {
-    int i = -1;
+    parCount = -1;
 
     for(Particle &particle : Particles)
     {
-        i++;
+        parCount++;
 
         float dx;
         float dy;
@@ -44,14 +44,22 @@ void ParticleSystem_::UpdateParticles(float deltaTime, Vector2 target, float for
         particle.vel.x -= normal.x / dist * forceMult;
         particle.vel.y -= normal.y / dist * forceMult;
 
+        particle.vel = Vector2Scale(particle.vel, 0.95f);
+
         // particle.vel = Vector2Add(particle.vel, Vector2Scale({0, 627.84f}, deltaTime));
         particle.pos = Vector2Add(particle.pos, Vector2Scale(particle.vel, deltaTime));
 
+        if(dist < 5)
+        {
+            particle.vel = Vector2Scale(particle.vel, -5);
+            particle.pos = Vector2Scale(normal, -5) + target;
+        }
+
         particle.age += deltaTime;
 
-        if(particle.age > 60 || dist > 10000)
+        if(particle.age > 600 || dist > 10000)
         {
-            Particles.erase(Particles.begin() + i);
+            Particles.erase(Particles.begin() + parCount);
         }
     }
 }

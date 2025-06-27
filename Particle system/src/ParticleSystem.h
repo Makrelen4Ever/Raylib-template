@@ -10,6 +10,8 @@ class ParticleSystem_
             Vector2 vel;
 
             float age;
+
+            float mass;
         };
 
         std::vector<Particle> Particles;
@@ -18,4 +20,6 @@ class ParticleSystem_
         void AddParticle(Vector2 pos, Vector2 vel);
         void UpdateParticles(float deltaTime, Vector2 target, float forceMult);
         void DrawParticles();
+
+        int parCount;
 };

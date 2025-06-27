@@ -29,13 +29,18 @@ int main()
 {
     InitWindow(screen.width, screen.height, "Raylib test");
 
+    // for (int i = 0; i < 10000; i++)
+    // {
+    //     parSystem.AddParticle({GetRandomValue(0, screen.width), GetRandomValue(0, screen.height)}, {0, 0});
+    // }
+
     while(WindowShouldClose() == false)
     {
-        if(IsMouseButtonDown(0))
+        if(parSystem.parCount < 100000)
         {
-            for (int i = 0; i < 2; i++)
+            for(int i = 0; i < 5; i++)
             {
-                parSystem.AddParticle(GetMousePosition(), Vector2Scale(GetMouseDelta(), (float)GetRandomValue(0, 100)));
+                parSystem.AddParticle({GetRandomValue(0, screen.width), GetRandomValue(0, screen.height)}, {0, 0});
             }
         }
 
