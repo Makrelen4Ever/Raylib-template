@@ -21,6 +21,8 @@ void Player::DrawPlayer()
 //Updates the rigidbody to apply drag, and other factors.
 void Player::Move(float fixedDeltaTime)
 {
+    Player::isdead = false;
+
     Vector2 OldPos = transform.position;
 
     if(IsOnGround & (InputManager::Getaxis(1).y < 0))
@@ -48,6 +50,12 @@ void Player::Move(float fixedDeltaTime)
                 continue;
             }
 
+            if(block.IsDangerous)
+            {
+                Player::isdead = true;
+                continue;
+            }
+
             if(abs(OldPos.y - transform.position.y) < 5.0f * rb.GravityScale)
             {
                 Player::rb.vel.y = 0;
@@ -71,6 +79,11 @@ void Player::Move(float fixedDeltaTime)
         {
             Player::IsOnGround = true;
         }
+    }
+
+    if(transform.position.y >= 500)
+    {
+        Player::isdead = true;
     }
 }
 

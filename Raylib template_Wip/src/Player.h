@@ -14,6 +14,7 @@ class Player
 
         bool IsOnGround;
         bool LevelFinished;
+        bool isdead;
 
         // bool IsLevelFinished();
 

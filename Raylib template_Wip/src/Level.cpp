@@ -38,11 +38,21 @@ std::vector<std::vector<std::string>> Levels = {
     },
 
     {
-        "____@_____",
-        "__________",
-        "__________",
-        "aaaaaaaaaa",
-        "____+_____",
+        "____@________",
+        "_____________",
+        "_____________",
+        "aaaaaaaaaa___",
+        "________+____",
+        "_____________",
+        "____________a",
+        "___________a_",
+        "__________a__",
+    },
+
+    {
+        "@__________",
+        "____ss___+_",
+        "aaaaaaaaaaa",
     },
 };
 
@@ -50,9 +60,10 @@ Player LoadLevel(int levelIndex, int BlockSize)
 {
     Blocks.clear();
 
-    char p = '@';
-    char b = 'a';
-    char e = '+';
+    char PlayerChar = '@';
+    char WallChar = 'a';
+    char PortalChar = '+';
+    char SpikeChar = 's';
 
     Vector2 playerPos = {0, 0};
 
@@ -62,16 +73,20 @@ Player LoadLevel(int levelIndex, int BlockSize)
         {
             char l = Levels[levelIndex][i][j];
 
-            if(l == p)
+            if(l == PlayerChar)
             {
                 playerPos = {(float)j * BlockSize, (float)i * BlockSize};
-            }else if(l == b)
+            }else if(l == WallChar)
             {
-                Block instance = {j * BlockSize, i * BlockSize, BlockSize, BlockSize, false};
+                Block instance = {j * BlockSize, i * BlockSize, BlockSize, BlockSize, false, false, WHITE};
                 Blocks.push_back(instance);
-            }else if(l == e)
+            }else if(l == PortalChar)
             {
-                Block instance = {j * BlockSize, i * BlockSize, BlockSize, BlockSize, true};
+                Block instance = {j * BlockSize, i * BlockSize, BlockSize, BlockSize, true, false, PURPLE};
+                Blocks.push_back(instance);
+            }else if(l == SpikeChar)
+            {
+                Block instance = {j * BlockSize, i * BlockSize, BlockSize, BlockSize, false, true, RED};
                 Blocks.push_back(instance);
             }else
             {
@@ -97,6 +112,6 @@ void DrawLevel()
 {
     for(Block block : Blocks)
     {
-        DrawRectangle(block.x, block.y, block.w, block.h, block.IsPortal ? (Color){255, 0, 255, 255} : WHITE);
+        DrawRectangle(block.x, block.y, block.w, block.h, block.color);
     }
 };

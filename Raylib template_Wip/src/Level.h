@@ -8,6 +8,9 @@ struct Block{
     int h;
 
     bool IsPortal;
+    bool IsDangerous;
+
+    Color color;
 };
 
 static std::vector<Block> Blocks;

@@ -9,6 +9,7 @@
 #include "src/Rigidbody.h"
 #include "src/InputManager.h"
 #include "src/Player.h"
+#include "src/ParticleSystem.h"
 
 #include "level.h"
 
@@ -24,20 +25,30 @@ struct ScreenStruct
 //Declaring variables
 ScreenStruct screen;
 
+ParticleSystem_ parSystem;
+
 Camera2D camera = { 0 };
 Player player;
 
 int levelIndex = 0;
 
 //The fixedUpdate function.
-//Gets called 50 times a sec.
+//Gets called 'screen.fixedDeltaTime' times a sec.
 void FixedUpdate()
 {
     player.Move(1.0f/screen.fixedDeltaTime);
-    camera.target = Vector2Lerp(camera.target, { player.transform.position.x, player.transform.position.y}, .05f);
+    camera.target = Vector2Lerp(camera.target, { player.transform.position.x, player.transform.position.y}, 1.0f / screen.fixedDeltaTime);
 
-    if(player.transform.position.y >= screen.height)
+    if(player.isdead || IsKeyDown(KEY_R))
     {
+        for(int i = 0; i < 50; i++)
+        {
+            float dir = GetRandomValue(-15, 15) * RAD2DEG;
+            float force = GetRandomValue(-5.0f, -10.0f);
+
+            parSystem.AddParticle(player.transform.position, {sin(dir) * force, cos(dir) * force}, {{0, 9.81f * 4}}, 2);
+        }
+
         player = LoadLevel(levelIndex, 20);
     }
 };
@@ -54,6 +65,7 @@ int main()
 {
     //Inits a window based on the screen struct.
     InitWindow(screen.width, screen.height, "Raylib test");
+    // SetTargetFPS(100);
     
     player = LoadLevel(levelIndex, 20);
 
@@ -69,6 +81,14 @@ int main()
     //Loops every frame until the window is closed.
     while(WindowShouldClose() == false)
     {
+        for(int i = 0; i < 5; i++)
+        {
+            float dir = GetRandomValue(-14.99999f, 14.99999f) * RAD2DEG;
+            float force = GetRandomValue(-4.99999f, -9.99999f);
+
+            parSystem.AddParticle({0, 0}, {sin(dir) * force, cos(dir) * force}, {{0, 9.81f * 4}}, 2);
+        }
+
         //Updates the tick based on deltatime to check if fixed update should be called.
         tick += GetFrameTime();
 
@@ -77,7 +97,8 @@ int main()
             //resets the tick, and calls the fixed update.
             tick = 0;
             
-            FixedUpdate();
+            // FixedUpdate();
+            parSystem.UpdateParticles(1.0f / screen.fixedDeltaTime);
         }
 
         //Clears the background, and write the current Fps in the top-left corner.
@@ -89,9 +110,11 @@ int main()
 
                 //Calls the update function used to draw things on the screen.
                 Update();
-                DrawLevel();
+                // DrawLevel();
 
-                DrawRectangleV({player.transform.position.x + 1, player.transform.position.y + player.transform.Scale}, {player.transform.Scale - 2, 5}, player.IsOnGround ? GREEN : RED);
+                // DrawRectangleV({player.transform.position.x + 1, player.transform.position.y + player.transform.Scale}, {player.transform.Scale - 2, 5}, player.IsOnGround ? GREEN : RED);
+
+                parSystem.DrawParticles();
             EndMode2D();
 
         EndDrawing();
