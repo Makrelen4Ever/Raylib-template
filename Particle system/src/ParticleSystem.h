@@ -2,7 +2,7 @@
 
 class ParticleSystem_ 
 {
-    private:
+    public:
         //256b per particle
         struct Particle
         {
@@ -12,13 +12,14 @@ class ParticleSystem_
             float age;
 
             float mass;
+
+            int id;
         };
 
         std::vector<Particle> Particles;
 
-    public:
-        void AddParticle(Vector2 pos, Vector2 vel);
-        void UpdateParticles(float deltaTime, Vector2 target, float forceMult);
+        void AddParticle(Vector2 pos, Vector2 vel, float mass, int id);
+        void UpdateParticles(float deltaTime, Vector2 target, float forceMult, bool calOtherParticles, int screenWidth, int screenHeight);
         void DrawParticles();
 
         int parCount;

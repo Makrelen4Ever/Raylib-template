@@ -61,8 +61,7 @@
 		"cinttypes": "cpp",
 		"typeinfo": "cpp",
 		"variant": "cpp",
-		"vectormathcostum": "cpp",
-		"*.m": "cpp"
+		"vectormathcostum": "cpp"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }
