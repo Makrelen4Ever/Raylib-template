@@ -14,6 +14,6 @@ void Rigidbody::Update(float fixedDeltaTime)
     if(UseGravity)
     {
         //Adds gravity based on the direction, abd gravityscale defined in the Rigidbody header file.
-        Rigidbody::vel = Vector2Add(vel, Vector2Scale(GravityDir, GravityScale));
+        Rigidbody::vel = Vector2Add(vel, Vector2Scale(GravityDir, GravityScale * fixedDeltaTime));
     }
 }

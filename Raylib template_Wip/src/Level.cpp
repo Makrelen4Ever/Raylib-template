@@ -9,50 +9,20 @@
 
 std::vector<std::vector<std::string>> Levels = {
     {
-        "@_____",
-        "____+_",
-        "aaaaaa",
-    },
-
-    {
-        "+_________",
-        "aaa_______",
-        "_______aaa",
-        "_@_______a",
-        "aaaaaaaaaa",
-    },
-
-    {
-        "_+________",
-        "_a________",
-        "__________",
-        "___a______",
-        "__________",
-        "_____a____",
-        "__________",
-        "_______a__",
-        "__________",
-        "_________a",
-        "_@________",
-        "aaaaaaaaaa",
-    },
-
-    {
-        "____@________",
-        "_____________",
-        "_____________",
-        "aaaaaaaaaa___",
-        "________+____",
-        "_____________",
-        "____________a",
-        "___________a_",
-        "__________a__",
-    },
-
-    {
-        "@__________",
-        "____ss___+_",
-        "aaaaaaaaaaa",
+        "_______aaaaaa__________aaaaa",
+        "____________________________",
+        "____________________________",
+        "______________@_____________",
+        "____________________________",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     },
 };
 
@@ -95,7 +65,11 @@ Player LoadLevel(int levelIndex, int BlockSize)
         }
     }
 
-    return AddPlayer(playerPos, {0, 0}, {0, 9.81f}, 5, 0, 0.95f, 8, 10, 300, true);
+    // Block instance = {0, 3 * BlockSize, 1000, BlockSize, false, false, WHITE};
+    // Blocks.push_back(instance);
+
+    //Position, vel, graavity, scale, something, gravity scale, movespeed, jump height, something
+    return AddPlayer(playerPos, {0, 0}, {0, 9.81f}, 15, 0, 0.95f, 800, 25, 600, true);
 };
 
 Block GetBlock(int index)

@@ -21,7 +21,7 @@ ScreenStruct screen;
 
 int main()
 {
-    InitWindow(screen.width, screen.height, "Raylib test");
+    InitWindow(screen.width, screen.height, "Engine");
     SetTargetFPS(120);
 
     SetExitKey(KEY_ESCAPE);
@@ -38,7 +38,14 @@ int main()
     selectedObject = objectManager.ObjectList[0];
     int selectedIndex = 0;
 
-    bool* isActive;
+    char xPositionChar[16] = {0};
+    char yPositionChar[16] = {0};
+
+    bool xEditMode = false;
+    bool yEditMode = false;
+
+    Rectangle xPositionRec = {screen.width - 200, 310, 200, 50};
+    Rectangle yPositionRec = {screen.width - 200, 360, 200, 50};
 
     while(WindowShouldClose() == false)
     {
@@ -60,21 +67,30 @@ int main()
                 selectedIndex = i;
             }
 
-            if(!object.IsActive)
+            if(!object.IsActive)    
             {
                 continue;
             }
             object.Draw(object.texture, object.position, object.rotation, object.Scale.x, WHITE);
         }
 
-        DrawText(selectedObject.name.c_str(), screen.width/2, 100, 50, WHITE);
+        //Name of selected object
+        DrawText(selectedObject.name.c_str(), screen.width - 200, 100, 50, WHITE);
 
+        //Active state of selected obeject
         if(GuiButton({screen.width - 200, 200, 150, 100}, selectedObject.IsActive ? "Active: true" : "Active: false"))
         {
             selectedObject.IsActive = !selectedObject.IsActive;
         }
 
-        GuiTextInputBox({screen.width/2, 200, 200, 50}, "x position", "Put x pos", "")
+        //Position input handling
+        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            xEditMode = CheckCollisionPointRec(GetMousePosition(), xPositionRec);
+            yEditMode = CheckCollisionPointRec(GetMousePosition(), yPositionRec);
+        }
+
+        GuiValueBoxFloat(xPositionRec, "X position", xPositionChar, &selectedObject.position.x, xEditMode);
+        GuiValueBoxFloat(yPositionRec, "Y position", yPositionChar, &selectedObject.position.y, yEditMode);
 
         EndDrawing();
     }

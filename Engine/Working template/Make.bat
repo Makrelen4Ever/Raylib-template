@@ -1,1 +1,0 @@
-C:\raylib\w64devkit\bin\make

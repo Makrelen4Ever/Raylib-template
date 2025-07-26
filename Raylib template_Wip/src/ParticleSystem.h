@@ -13,13 +13,17 @@ class ParticleSystem_
             float size;
 
             float age;
+
+            Color col;
         };
 
         std::vector<Particle> Particles;
 
     public:
-        void AddParticle(Vector2 pos, Vector2 vel, std::vector<Vector2> externalForces, float size);
+        void AddParticle(Vector2 pos, Vector2 vel, std::vector<Vector2> externalForces, float size, Color col);
         void UpdateParticles(float deltaTime);
         void DrawParticles();
+
+        int ID;
         
 };

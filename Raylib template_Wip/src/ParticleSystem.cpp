@@ -5,7 +5,7 @@
 
 #include "ParticleSystem.h"
 
-void ParticleSystem_:: AddParticle(Vector2 pos, Vector2 vel, std::vector<Vector2> externalForces, float size)
+void ParticleSystem_:: AddParticle(Vector2 pos, Vector2 vel, std::vector<Vector2> externalForces, float size, Color col)
 {
     Particle particle;
 
@@ -15,6 +15,7 @@ void ParticleSystem_:: AddParticle(Vector2 pos, Vector2 vel, std::vector<Vector2
     particle.size = size;
 
     particle.age = 0;
+    particle.col = col;
 
     particle.externalForces = externalForces;
 
@@ -43,14 +44,12 @@ void ParticleSystem_::UpdateParticles(float deltaTime)
             Particles.erase(Particles.begin() + i);
         }
     }
-
-    std::cout << i << std::endl;
 }
 
 void ParticleSystem_::DrawParticles()
 {
     for(Particle particle : Particles)
     {
-        DrawCircleV(particle.pos, particle.size, WHITE);
+        DrawCircleV(particle.pos, particle.size, particle.col);
     }
 }

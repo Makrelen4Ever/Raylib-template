@@ -16,6 +16,13 @@ class Player
         bool LevelFinished;
         bool isdead;
 
+        float Firerate = 1;
+        float FireTimer = 0;
+        float Recoil = 250;
+
+        float RocketFireRate = 5;
+        float RocketTimer = 0;
+
         // bool IsLevelFinished();
 
         void DrawPlayer();

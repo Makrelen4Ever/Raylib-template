@@ -32,6 +32,7 @@ void Player::Move(float fixedDeltaTime)
     }
 
     Player::rb.vel = Vector2Add((Vector2){InputManager::Getaxis(Speed).x, 0}, rb.vel);
+
     Player::rb.Update(fixedDeltaTime);
 
     Player::transform.position = Vector2Add(transform.position, Vector2Scale(rb.vel, fixedDeltaTime));
@@ -120,6 +121,10 @@ Player AddPlayer(Vector2 pos, Vector2 vel, Vector2 GravityDir, float scale, floa
     tempPlayerrb.GravityDir = Vector2Normalize(GravityDir);
     tempPlayerrb.GravityScale = GravityScale;
     tempPlayerrb.UseGravity = UseGravity;
+
+    player.Firerate = .1f;
+    player.FireTimer = 0;
+    player.Recoil = 15;
 
     //Initializes the player.
     player.InitPlayer(tempPlayerTransform, tempPlayerrb, Speed, JumpForce);
