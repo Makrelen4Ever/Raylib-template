@@ -18,12 +18,14 @@ struct ScreenStruct
     int height = 1080;
 
     float fixedDeltaTime = 100;
-    float timeScale = 1.5f;
+    float timeScale = 1;
 
     float tick = 0;
 };
 
 extern ScreenStruct screen;
+
+bool Reset();
 
 void Start();
 void Update();
@@ -31,4 +33,4 @@ void FixedUpdate(float deltaTime);
 
 extern std::vector<Enemy> Enemies;
 
-void GetMouseDirection(Vector2 position, float scale);
+Vector2 GetMouseDirection(Vector2 position, float scale);

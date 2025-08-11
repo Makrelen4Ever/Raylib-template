@@ -14,9 +14,11 @@ int main()
     SetTargetFPS(120);
     SetExitKey(KEY_ESCAPE);
 
+    startLabel:
+
     Start();
 
-    while(WindowShouldClose() == false)
+    while(WindowShouldClose() == false || Reset)
     {
         //Creates a function thats run on a fixed timestep, specified in ScreenStruct
         screen.tick += GetFrameTime() * screen.timeScale;
@@ -30,11 +32,21 @@ int main()
             }
         }
 
+        if()
+        {
+            
+        }
+
         BeginDrawing();
 
         Update();
 
         EndDrawing();
+    }
+
+    if(Reset)
+    {
+        goto startLabel;
     }
 
     CloseWindow();

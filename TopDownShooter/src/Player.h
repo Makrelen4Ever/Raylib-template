@@ -34,10 +34,14 @@ class Player
 
         Bullet playerBullet;
 
+        //Health
+        int MaxHealth;
+        int CurrHealth;
+
         //Functions
         void Draw();
         void Update(float deltaTime);
         void UpdateCollider();
 };
 
-void InitializePlayer(Player player);
+void InitializePlayer(Player &player);

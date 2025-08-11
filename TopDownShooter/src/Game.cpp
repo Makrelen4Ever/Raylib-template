@@ -33,6 +33,8 @@ void Start()
     enemy.Health = 3;
     enemy.IsDead = false;
 
+    enemy.Melee = true;
+
     //Spawning enemies
     float direction, radius;
 
@@ -84,7 +86,7 @@ void FixedUpdate(float deltaTime)
     UpdateBullets(deltaTime);
 }
 
-void GetMouseDirection(Vcetor2 position, float scale)
+Vector2 GetMouseDirection(Vector2 position, float scale)
 {
     Vector2 mouseDirection;
     mouseDirection = Vector2Subtract(GetMousePosition(), position);
