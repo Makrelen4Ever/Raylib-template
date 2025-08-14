@@ -11,7 +11,8 @@ struct ScreenStruct
     int width = 1920/2;
     int height = 1080/2;
 
-    float fixedTimeStep = 40;
+    float fixedTimeStep = 50;
+    float timeScale = 1;
 };
 
 float timeStep;
@@ -20,28 +21,33 @@ ScreenStruct screen;
 
 ParticleSystem_ parSystem;
 
+Vector2 MouseTempPosition = {(float)screen.width / (float)2, (float)screen.height / (float)2};
+Vector2 MouseTempVelocity = {0, 0};
+Vector2 MouseTempPolarCoor = {0, 500};
+
 void FixedUpdate()
 {
-    parSystem.UpdateParticles(1.0f / screen.fixedTimeStep, GetMousePosition(), 100, false, screen.width, screen.height);
+    parSystem.UpdateParticles(1.0f / screen.fixedTimeStep, {screen.width/2, screen.height/2}, 10, true, screen.width, screen.height);
 }
 
 int main()
 {
     InitWindow(screen.width, screen.height, "Raylib test");
-
-    for(int i = 0; i < 100000; i++)
+    SetTargetFPS(30);
+    for(int j = 0; j <= 10; j++)
     {
-        int dir = GetRandomValue(0, 360);
-        int force = GetRandomValue(0, 50);
+        for(int i = 0; i < 50; i++)
+        {
+            float dir = (GetRandomValue(-90, 90) + GetRandomValue(0, 180)) * DEG2RAD;
+            float force = GetRandomValue(0, 500);
 
-        parSystem.AddParticle({screen.width/2, screen.height/2}, {sin(dir) * force, cos(dir) * force}, Clamp(GetRandomValue(-20, 5), 1, 1), i);
+            parSystem.AddParticle({(float)screen.width/2, (float)screen.height/2}, {sin(dir) * force, cos(dir) * force}, fmax(GetRandomValue(-5, 3), 1), i);
+        }
     }
 
     while(WindowShouldClose() == false)
     {
-        parSystem.AddParticle({0, screen.height/2}, {100, 50}, 1, parSystem.parCount + 1);
-
-        timeStep += GetFrameTime();
+        timeStep += GetFrameTime() * screen.timeScale;
         if(timeStep > 1.0f / screen.fixedTimeStep)
         {
             while(timeStep > 0)
@@ -52,10 +58,11 @@ int main()
         }
 
         BeginDrawing();
-            ClearBackground((Color){50, 50, 50, 255});
-            DrawFPS(10, 10);
+            // ClearBackground(WHITE);
+            DrawRectangle(0, 0, screen.width, screen.height, (Color){255, 255, 255, 255 / 10});
 
             parSystem.DrawParticles();
+            // DrawCircleV(MouseTempPosition, 5, WHITE);
 
         EndDrawing();
     }

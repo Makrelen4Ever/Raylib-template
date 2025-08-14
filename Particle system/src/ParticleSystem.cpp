@@ -6,7 +6,7 @@
 
 #include "ParticleSystem.h"
 
-//particles
+//Declaring a functino to add particles.
 void ParticleSystem_:: AddParticle(Vector2 pos, Vector2 vel, float mass, int id)
 {
     Particle particle;
@@ -14,7 +14,6 @@ void ParticleSystem_:: AddParticle(Vector2 pos, Vector2 vel, float mass, int id)
     particle.pos = pos;
     particle.vel = vel;
 
-    particle.age = 0;
     particle.mass = mass;
 
     particle.id = id;
@@ -26,7 +25,7 @@ void ParticleSystem_::UpdateParticles(float deltaTime, Vector2 target, float for
 {
     std::vector<Particle> oldParticles = Particles;
     
-    //Gravity simulation
+    //Declaring gravity variables.
     float dx;
     float dy;
 
@@ -34,6 +33,8 @@ void ParticleSystem_::UpdateParticles(float deltaTime, Vector2 target, float for
 
     Vector2 normal;
 
+
+    //Sampling other particles gravity
     parCount = -1;
     for(Particle &particle : Particles)
     {
@@ -55,7 +56,7 @@ void ParticleSystem_::UpdateParticles(float deltaTime, Vector2 target, float for
                 dist = fmax(dist, .5f);
 
                 dist = pow(dist, 2);
-                dist /= sqrt((dx * dx) + (dy *dy));
+                // dist /= sqrt((dx * dx) + (dy *dy));
 
                 normal = {dx * (1 / dist), dy * (1 / dist)};
 
@@ -64,6 +65,7 @@ void ParticleSystem_::UpdateParticles(float deltaTime, Vector2 target, float for
             }
         }
 
+        //Sampling target gravity
         dx = particle.pos.x - target.x;
         dy = particle.pos.y - target.y;
 
@@ -79,25 +81,9 @@ void ParticleSystem_::UpdateParticles(float deltaTime, Vector2 target, float for
         particle.vel.y -= normal.y / dist * forceMult;
 
         particle.vel = Vector2Scale(particle.vel, 0.99f);
-        particle.vel.y += 9.81f;
 
         //Movement
         particle.pos = Vector2Add(particle.pos, Vector2Scale(particle.vel, deltaTime / particle.mass));
-
-        // if(dist < 5)
-        // {
-        //     particle.pos = {GetRandomValue(0, screenWidth), GetRandomValue(0, screenHeight)};
-        //     particle.pos = Vector2Scale(particle.pos, 2);
-        //     particle.pos = Vector2Add(particle.pos, {-screenWidth, -screenHeight});
-        // }
-
-        //Aging
-        particle.age += deltaTime;
-
-        if(particle.age > 5)
-        {
-            Particles.erase(Particles.begin() + parCount);
-        }
     }
 }
 
@@ -105,6 +91,6 @@ void ParticleSystem_::DrawParticles()
 {
     for(Particle particle : Particles)
     {
-        DrawPixelV(particle.pos, WHITE);
+        DrawPixelV(particle.pos, BLACK);
     }
 }

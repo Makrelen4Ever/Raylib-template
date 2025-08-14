@@ -9,8 +9,6 @@ class ParticleSystem_
             Vector2 pos;
             Vector2 vel;
 
-            float age;
-
             float mass;
 
             int id;
@@ -20,6 +18,7 @@ class ParticleSystem_
 
         void AddParticle(Vector2 pos, Vector2 vel, float mass, int id);
         void UpdateParticles(float deltaTime, Vector2 target, float forceMult, bool calOtherParticles, int screenWidth, int screenHeight);
+        void NewFunction(std::vector<ParticleSystem_::Particle> &oldParticles, ParticleSystem_::Particle &particle, float &dx, float &dy, float &dist, Vector2 &normal);
         void DrawParticles();
 
         int parCount;
