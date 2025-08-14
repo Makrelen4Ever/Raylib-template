@@ -14,8 +14,10 @@ int main()
     SetTargetFPS(120);
     SetExitKey(KEY_ESCAPE);
 
+
     startLabel:
 
+    Reset = false;
     Start();
 
     while(WindowShouldClose() == false || Reset)
@@ -32,11 +34,6 @@ int main()
             }
         }
 
-        if()
-        {
-            
-        }
-
         BeginDrawing();
 
         Update();
@@ -46,6 +43,7 @@ int main()
 
     if(Reset)
     {
+        Reset = false;
         goto startLabel;
     }
 

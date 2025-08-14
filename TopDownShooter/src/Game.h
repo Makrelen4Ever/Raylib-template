@@ -25,7 +25,7 @@ struct ScreenStruct
 
 extern ScreenStruct screen;
 
-bool Reset();
+extern bool Reset;
 
 void Start();
 void Update();

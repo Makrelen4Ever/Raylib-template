@@ -1,6 +1,8 @@
 #include "Game.h"
 ScreenStruct screen;
 
+bool Reset;
+
 //Declare variables
 Player player;
 std::vector<Enemy> Enemies;
@@ -34,6 +36,8 @@ void Start()
     enemy.IsDead = false;
 
     enemy.Melee = true;
+
+    Enemies.clear();
 
     //Spawning enemies
     float direction, radius;

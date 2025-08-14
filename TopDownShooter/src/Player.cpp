@@ -22,6 +22,11 @@ void Player::Draw()
     DrawRectangle(100, GetScreenHeight() - 25, GetScreenWidth() - 200, 50, {150, 0, 0, 255});
     float HealthRatio = ((float)CurrHealth / (float)MaxHealth);
     DrawRectangle(GetScreenWidth() / 2 - ((GetScreenWidth() / 2 - 100) * HealthRatio), GetScreenHeight() - 25, HealthRatio * (GetScreenWidth() - 200), 50, RED);
+
+    if(CurrHealth <= 0)
+    {
+        Reset = true;
+    }
 }
 
 void Player::UpdateCollider()
@@ -148,4 +153,5 @@ void InitializePlayer(Player &player)
 
     player.MaxHealth = 100;
     player.CurrHealth = 100;
+    Reset = false;
 }
