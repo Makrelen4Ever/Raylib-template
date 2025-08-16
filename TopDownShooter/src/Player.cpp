@@ -6,6 +6,7 @@
 #include <math.h>
 
 #include "InputManager.h"
+#include "ParticleSystem.h"
 
 #include "Game.h"
 #include "Bullet.h"
@@ -25,6 +26,19 @@ void Player::Draw()
 
     if(CurrHealth <= 0)
     {
+        Player::Position.x = -10000;
+
+        int dir;
+        int force;
+
+        for(int i = 0; i < 50; i++)
+        {
+            dir = GetRandomValue(0, 3600) / 10 * DEG2RAD;
+            force = GetRandomValue(10, 50);
+
+            parSystem.AddParticle(Position, {sin(dir) * force, cos(dir) * force});
+        }
+
         Reset = true;
     }
 }

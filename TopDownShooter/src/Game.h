@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "InputManager.h"
+#include "ParticleSystem.h"
 
 #include "Bullet.h"
 #include "Player.h"
@@ -24,6 +25,7 @@ struct ScreenStruct
 };
 
 extern ScreenStruct screen;
+extern ParticleSystem_ parSystem;
 
 extern bool Reset;
 

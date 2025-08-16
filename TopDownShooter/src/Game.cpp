@@ -1,5 +1,6 @@
 #include "Game.h"
 ScreenStruct screen;
+ParticleSystem_ parSystem;
 
 bool Reset;
 

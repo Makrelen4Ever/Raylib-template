@@ -20,7 +20,7 @@ int main()
     Reset = false;
     Start();
 
-    while(WindowShouldClose() == false || Reset)
+    while(WindowShouldClose() == false)
     {
         //Creates a function thats run on a fixed timestep, specified in ScreenStruct
         screen.tick += GetFrameTime() * screen.timeScale;
@@ -39,12 +39,12 @@ int main()
         Update();
 
         EndDrawing();
-    }
-
-    if(Reset)
-    {
-        Reset = false;
-        goto startLabel;
+        
+        if(Reset)
+        {
+            Reset = false;
+            goto startLabel;
+        }
     }
 
     CloseWindow();
