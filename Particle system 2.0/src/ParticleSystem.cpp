@@ -16,7 +16,7 @@ void ParticleSystem_::AddParticle(Vector2 Position, Vector2 Velocity, Vector2 Fo
     ParticleSystem_::Particles.push_back(localParticle);
 }
 
-void ParticleSystem_::UpdateParticles(float deltaTime, float SelfAttractionForce, float CenterAttractionForce)
+void ParticleSystem_::UpdateParticles(bool aging, float deltaTime, float SelfAttractionForce, float CenterAttractionForce)
 {
     float dx;
     float dy;
@@ -43,7 +43,7 @@ void ParticleSystem_::UpdateParticles(float deltaTime, float SelfAttractionForce
             dist = sqrt((dx * dx) + (dy * dy));
             dist = fmax(dist, .5f);
 
-            // dist = pow(dist, 2);
+            dist = pow(dist, 2) / 2;
             // dist /= sqrt((dx * dx) + (dy *dy));
 
             normal = {dx * (1 / dist), dy * (1 / dist)};
@@ -64,6 +64,8 @@ void ParticleSystem_::UpdateParticles(float deltaTime, float SelfAttractionForce
         particle.Velocity.y -= (normal.y / dist) * deltaTime * CenterAttractionForce;
 
         particle.Position = Vector2Add(particle.Position, Vector2Scale(particle.Velocity, deltaTime));
+
+        if(!aging) continue;
 
         particle.Age -= deltaTime;
         if(particle.Age <= 0)

@@ -17,7 +17,7 @@ class ParticleSystem_ {
     public:
         Particle localParticle;
 
-        void UpdateParticles(float deltaTime, float SelfAttractionForce, float CenterAttractionForce);
+        void UpdateParticles(bool aging, float deltaTime, float SelfAttractionForce, float CenterAttractionForce);
         void DrawParticles();
         void ReloadParticle(Particle particle);
         void AddParticle(Vector2 Position, Vector2 Velocity, Vector2 Forces);

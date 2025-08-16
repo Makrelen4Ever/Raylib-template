@@ -6,19 +6,6 @@
 
 #include "Game.h"
 
-struct ScreenStruct
-{
-    int width = 800;
-    int height = 800;
-
-    float fixedDeltaTime = 30;
-    float timeScale = 1;
-
-    float tick = 0;
-};
-
-ScreenStruct screen;
-
 int main()
 {
     //Inits a window, and sets a target fps
